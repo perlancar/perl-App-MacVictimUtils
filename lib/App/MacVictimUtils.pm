@@ -33,7 +33,7 @@ sub delete_ds_store {
 
     File::Find::find(
         sub {
-            next unless -f && $_ eq '.DS_Store';
+            return unless -f && $_ eq '.DS_Store';
             if ($args{-dry_run}) {
                 log_info("[DRY] Deleting %s/.DS_Store ...", $File::Find::dir);
                 return;
@@ -45,6 +45,7 @@ sub delete_ds_store {
         },
         @dirs,
     );
+    [200];
 }
 
 1;
